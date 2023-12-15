@@ -29,8 +29,8 @@ export default function AddClub() {
             </Head>
             <Layout>
                 <div className="row d-flex justify-content-center">
-                    <div className="col-md-6">
-                        <h1 className="text-center mb-5">
+                    <div className="col-md-6 mb-5">
+                        <h1 className="text-center">
                             Tambah Klub
                         </h1>
                     </div>

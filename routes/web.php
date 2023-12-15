@@ -17,3 +17,5 @@ Route::get('/', [\App\Http\Controllers\ClubController::class, 'index']);
 Route::get('/clubs', [\App\Http\Controllers\ClubController::class, 'index']);
 Route::get('/clubs/create', [\App\Http\Controllers\ClubController::class, 'create']);
 Route::post('/clubs', [\App\Http\Controllers\ClubController::class, 'store']);
+Route::get('/clubs/scores/create', [\App\Http\Controllers\ClubController::class, 'createScore']);
+Route::post('/clubs/scores', [\App\Http\Controllers\ClubController::class, 'storeScore']);

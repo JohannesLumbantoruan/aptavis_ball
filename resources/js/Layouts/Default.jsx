@@ -23,7 +23,7 @@ export default function Layout({ children }) {
                                     <Link className="nav-link" href="/clubs/create">Tambah Klub</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="#">Tambah Skor</Link>
+                                    <Link className="nav-link" href="/clubs/scores/create">Tambah Skor</Link>
                                 </li>
                             </ul>
                         </div>

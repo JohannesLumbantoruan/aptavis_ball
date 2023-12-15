@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('city');
-            $table->integer('mp')->nullable();
-            $table->integer('w')->nullable();
-            $table->integer('d')->nullable();
-            $table->integer('l')->nullable();
-            $table->integer('gf')->nullable();
-            $table->integer('ga')->nullable();
+            $table->integer('mp')->nullable()->default(0);
+            $table->integer('w')->nullable()->default(0);
+            $table->integer('d')->nullable()->default(0);
+            $table->integer('l')->nullable()->default(0);
+            $table->integer('gf')->nullable()->default(0);
+            $table->integer('ga')->nullable()->default(0);
             $table->timestamps();
         });
     }
