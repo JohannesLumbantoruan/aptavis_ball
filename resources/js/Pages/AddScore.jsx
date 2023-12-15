@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Head, usePage } from "@inertiajs/inertia-react";
 
 import Layout from "../Layouts/Default";
 import { Inertia } from "@inertiajs/inertia";
+
+import AddScoreInput from "../Components/AddScoreInput";
 
 export default function AddScore() {
     const { clubs: data } = usePage().props;
@@ -12,31 +14,110 @@ export default function AddScore() {
     const [awayTeam, setAwayTeam] = useState('');
     const [homeTeamScore, setHomeTeamScore] = useState(0);
     const [awayTeamScore, setAwayTeamScore] = useState(0);
+    const [matches, setMatches] = useState([
+        {
+            homeTeam: '',
+            awayTeam: '',
+            homeTeamScore: 0,
+            awayTeamScore: 0
+        }
+    ]);
+    const [index, setIndex] = useState(0);
 
     const { status } = usePage().props.session;
 
-    const homeTeamChangeHandler = (e) => setHomeTeam(e.target.value);
-    const awayTeamChangeHandler = (e) => setAwayTeam(e.target.value);
-    const homeTeamScoreChangeHandler = (e) => setHomeTeamScore(Number(e.target.value));
-    const awayTeamScoreChangeHandler = (e) => setAwayTeamScore(Number(e.target.value));
+    // const homeTeamChangeHandler = (e) => setHomeTeam(e.target.value);
+    // const awayTeamChangeHandler = (e) => setAwayTeam(e.target.value);
+    // const homeTeamScoreChangeHandler = (e) => setHomeTeamScore(Number(e.target.value));
+    // const awayTeamScoreChangeHandler = (e) => setAwayTeamScore(Number(e.target.value));
+
+    const homeTeamChangeHandler = (e) => setMatches((prev) => prev.map((match, i) => {
+        console.log(match);
+        const idx = Number(e.target.getAttribute('index'));
+
+        console.log(idx);
+
+        if (i === idx) {
+            match['homeTeam'] = e.target.value;
+            return match;
+        }
+
+        return match;
+    }));
+    const awayTeamChangeHandler = (e) => setMatches((prev) => prev.map((match, i) => {
+        const idx = Number(e.target.getAttribute('index'));
+
+        if (i === idx) {
+            match['awayTeam'] = e.target.value;
+            return match;
+        }
+
+        return match;
+    }));
+    const homeTeamScoreChangeHandler = (e) => setMatches((prev) => prev.map((match, i) => {
+        const idx = Number(e.target.getAttribute('index'));
+
+        if (i === idx) {
+            match['homeTeamScore'] = e.target.value;
+            return match;
+        }
+
+        return match;
+    }));
+    const awayTeamScoreChangeHandler = (e) => setMatches((prev) => prev.map((match, i) => {
+        const idx = Number(e.target.getAttribute('index'));
+
+        if (i === idx) {
+            match['awayTeamScore'] = e.target.value;
+            return match;
+        }
+
+        return match;
+    }));
 
     const submitHandler = (e) => {
         e.preventDefault();
 
-        const payload = {
-            homeTeam,
-            awayTeam,
-            homeTeamScore,
-            awayTeamScore
-        };
+        // const payload = {
+        //     homeTeam,
+        //     awayTeam,
+        //     homeTeamScore,
+        //     awayTeamScore
+        // };
 
-        console.log(payload);
+        console.log(matches);
 
-        Inertia.post('/clubs/scores', payload);
+        Inertia.post('/clubs/scores', { matches });
+    };
+
+    const clickHandler = () => {
+        const addScoreInput = (
+            <AddScoreInput
+                index={index + 1}
+                homeTeamChangeHandler={homeTeamChangeHandler}
+                clubs={clubs}
+                matches={matches}
+                awayTeamChangeHandler={awayTeamChangeHandler}
+                homeTeamScoreChangeHandler={homeTeamScoreChangeHandler}
+                awayTeamScoreChangeHandler={awayTeamScoreChangeHandler}
+            />
+        );
+
+        setIndex((prev) => prev + 1);
+
+        setMatches((prev) => ([
+            ...prev,
+            {
+                homeTeam: '',
+                awayTeam: '',
+                homeTeamScore: 0,
+                awayTeamScore: 0
+            }
+        ]));
     };
 
     useEffect(() => {
-        // console.log(clubs);
+        console.log(matches);
     });
 
     return (
@@ -60,7 +141,10 @@ export default function AddScore() {
                                 </div>
                             )
                         }
-                        <div className="row mb-3">
+                        <div className="col-12">
+                            <button className="btn btn-outline-success my-3" onClick={clickHandler}>Tambah form</button>
+                        </div>
+                        {/* <div className="row mb-3">
                             <div className="col-4">
                                 <label htmlFor="homeTeam" className="form-label d-flex justify-content-center">Kandang</label>
                                 <select name="" id="homeTeam" className="form-control" onChange={homeTeamChangeHandler} required>
@@ -93,6 +177,56 @@ export default function AddScore() {
                             <div className="col-12">
                                 <button className="btn btn-outline-light d-block w-100 mt-4">Tambah</button>
                             </div>
+                        </div> */}
+                        {/* <div className="row mb-3">
+                            <div className="col-4">
+                                <label htmlFor="homeTeam" className="form-label d-flex justify-content-center">Kandang</label>
+                                <select name="" id="homeTeam" className="form-control" onChange={homeTeamChangeHandler} index={0} required>
+                                    <option value="">---Pilih klub---</option>
+                                    {
+                                        clubs.map((club) => (
+                                            <option key={club.id} value={ club.id }>{ club.name }</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="col-4">
+                                <label htmlFor="score" className="form-label d-flex justify-content-center">Score</label>
+                                <div className="input-group" id="score">
+                                    <input type="number" id="homeTeamScore" className="form-control" min="0" value={matches[0].homeTeamScore} onChange={homeTeamScoreChangeHandler} index={index} required/>
+                                    <input type="number" id="awayTeamScore" className="form-control" min="0" value={matches[0].awayTeamScore} onChange={awayTeamScoreChangeHandler} index={index} required/>
+                                </div>
+                            </div>
+                            <div className="col-4">
+                                <label htmlFor="awayTeam" className="form-label d-flex justify-content-center">Tandang</label>
+                                <select name="" id="awayTeam" className="form-control" onChange={awayTeamChangeHandler} index={0} required>
+                                    <option value="">---Pilih klub---</option>
+                                    {
+                                        clubs.map((club) => (
+                                            <option key={club.id} value={ club.id }>{ club.name }</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>                            
+                            <div className="col-12">
+                                <button className="btn btn-outline-light d-block w-100 mt-4">Tambah</button>
+                            </div>
+                        </div> */}
+                        {
+                            matches.map((match, i) => (
+                                <AddScoreInput
+                                    index={i}
+                                    homeTeamChangeHandler={homeTeamChangeHandler}
+                                    clubs={clubs}
+                                    matches={matches}
+                                    awayTeamChangeHandler={awayTeamChangeHandler}
+                                    homeTeamScoreChangeHandler={homeTeamScoreChangeHandler}
+                                    awayTeamScoreChangeHandler={awayTeamScoreChangeHandler}
+                                />
+                            ))
+                        }
+                        <div className="col-12">
+                            <button className="btn btn-outline-light d-block w-100 mt-4">Tambah</button>
                         </div>
                     </form>
                 </div>
