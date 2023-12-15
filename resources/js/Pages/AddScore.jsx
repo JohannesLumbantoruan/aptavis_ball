@@ -97,18 +97,6 @@ export default function AddScore() {
     };
 
     const clickHandler = () => {
-        const addScoreInput = (
-            <AddScoreInput
-                index={index + 1}
-                homeTeamChangeHandler={homeTeamChangeHandler}
-                clubs={clubs}
-                matches={matches}
-                awayTeamChangeHandler={awayTeamChangeHandler}
-                homeTeamScoreChangeHandler={homeTeamScoreChangeHandler}
-                awayTeamScoreChangeHandler={awayTeamScoreChangeHandler}
-            />
-        );
-
         setIndex((prev) => prev + 1);
 
         setMatches((prev) => ([
