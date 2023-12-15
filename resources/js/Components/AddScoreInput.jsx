@@ -7,7 +7,9 @@ export default function AddScoreInput({
     matches,
     awayTeamChangeHandler,
     homeTeamScoreChangeHandler,
-    awayTeamScoreChangeHandler
+    awayTeamScoreChangeHandler,
+    homeClubs,
+    awayClubs
 }) {
     return (
         <div className="row mb-3">
@@ -16,7 +18,7 @@ export default function AddScoreInput({
                 <select name="" id="homeTeam" className="form-control" onChange={homeTeamChangeHandler} index={index} required>
                     <option value="">---Pilih klub---</option>
                     {
-                        clubs.map((club) => (
+                        homeClubs.map((club) => (
                             <option key={club.id} value={ club.id }>{ club.name }</option>
                         ))
                     }
@@ -34,7 +36,7 @@ export default function AddScoreInput({
                 <select name="" id="awayTeam" className="form-control" onChange={awayTeamChangeHandler} index={index} required>
                     <option value="">---Pilih klub---</option>
                     {
-                        clubs.map((club) => (
+                        awayClubs.map((club) => (
                             <option key={club.id} value={ club.id }>{ club.name }</option>
                         ))
                     }

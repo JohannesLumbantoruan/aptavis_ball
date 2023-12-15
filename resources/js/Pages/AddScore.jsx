@@ -23,6 +23,8 @@ export default function AddScore() {
         }
     ]);
     const [index, setIndex] = useState(0);
+    const [homeClubs, setHomeClubs] = useState(data);
+    const [awayClubs, setAwayClubs] = useState([]);
 
     const { status } = usePage().props.session;
 
@@ -31,19 +33,23 @@ export default function AddScore() {
     // const homeTeamScoreChangeHandler = (e) => setHomeTeamScore(Number(e.target.value));
     // const awayTeamScoreChangeHandler = (e) => setAwayTeamScore(Number(e.target.value));
 
-    const homeTeamChangeHandler = (e) => setMatches((prev) => prev.map((match, i) => {
-        console.log(match);
+    const homeTeamChangeHandler = (e) => {
         const idx = Number(e.target.getAttribute('index'));
+        const homeTeam = Number(e.target.value);
 
-        console.log(idx);
-
-        if (i === idx) {
-            match['homeTeam'] = e.target.value;
+        setMatches((prev) => prev.map((match, i) => {
+            // const idx = Number(e.target.getAttribute('index'));
+    
+            if (i === idx) {
+                match['homeTeam'] = e.target.value;
+                return match;
+            }
+    
             return match;
-        }
+        }));
 
-        return match;
-    }));
+        setAwayClubs(homeClubs.filter((club) => club.id !== homeTeam));
+    };
     const awayTeamChangeHandler = (e) => setMatches((prev) => prev.map((match, i) => {
         const idx = Number(e.target.getAttribute('index'));
 
@@ -127,7 +133,7 @@ export default function AddScore() {
             </Head>
             <Layout>
                 <div className="row d-flex justify-content-center">
-                    <div className="col-md-6 mb-5">
+                    <div className="col-md-6">
                         <h1 className="text-center">Tambah Skor</h1>
                     </div>
                 </div>
@@ -142,7 +148,7 @@ export default function AddScore() {
                             )
                         }
                         <div className="col-12">
-                            <button className="btn btn-outline-success my-3" onClick={clickHandler}>Tambah form</button>
+                            <button className="btn btn-outline-success my-3" onClick={clickHandler} type="button">Tambah form</button>
                         </div>
                         {/* <div className="row mb-3">
                             <div className="col-4">
@@ -217,7 +223,8 @@ export default function AddScore() {
                                 <AddScoreInput
                                     index={i}
                                     homeTeamChangeHandler={homeTeamChangeHandler}
-                                    clubs={clubs}
+                                    homeClubs={homeClubs}
+                                    awayClubs={awayClubs}
                                     matches={matches}
                                     awayTeamChangeHandler={awayTeamChangeHandler}
                                     homeTeamScoreChangeHandler={homeTeamScoreChangeHandler}
