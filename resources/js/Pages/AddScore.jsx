@@ -13,6 +13,8 @@ export default function AddScore() {
     const [homeTeamScore, setHomeTeamScore] = useState(0);
     const [awayTeamScore, setAwayTeamScore] = useState(0);
 
+    const { status } = usePage().props.session;
+
     const homeTeamChangeHandler = (e) => setHomeTeam(e.target.value);
     const awayTeamChangeHandler = (e) => setAwayTeam(e.target.value);
     const homeTeamScoreChangeHandler = (e) => setHomeTeamScore(Number(e.target.value));
@@ -50,6 +52,14 @@ export default function AddScore() {
                 </div>
                 <div className="row d-flex justify-content-center">
                     <form action="" className="col-md-6" onSubmit={submitHandler}>
+                        {
+                            status && (
+                                <div className="alert alert-success alert-dismissible fade show" role="alert">
+                                    <p className="text-center m-0 p-0">{status}</p>
+                                    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            )
+                        }
                         <div className="row mb-3">
                             <div className="col-4">
                                 <label htmlFor="homeTeam" className="form-label d-flex justify-content-center">Kandang</label>
@@ -81,7 +91,7 @@ export default function AddScore() {
                                 </select>
                             </div>                            
                             <div className="col-12">
-                                    <button className="btn btn-outline-light d-block w-100 mt-4">Tambah</button>
+                                <button className="btn btn-outline-light d-block w-100 mt-4">Tambah</button>
                             </div>
                         </div>
                     </form>

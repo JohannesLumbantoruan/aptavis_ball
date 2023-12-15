@@ -42,11 +42,11 @@ export default function Index() {
                                             <td scope="row">{i + 1}</td>
                                             <td>{ klub.name ?? 0 }</td>
                                             <td>{ klub.mp ?? 0 }</td>
-                                            <td>{ klub.me ?? 0 }</td>
-                                            <td>{ klub.s ?? 0 }</td>
-                                            <td>{ klub.k ?? 0 }</td>
-                                            <td>{ klub.gm ?? 0 }</td>
-                                            <td>{ klub.gk ?? 0 }</td>
+                                            <td>{ klub.w ?? 0 }</td>
+                                            <td>{ klub.d ?? 0 }</td>
+                                            <td>{ klub.l ?? 0 }</td>
+                                            <td>{ klub.gf ?? 0 }</td>
+                                            <td>{ klub.ga ?? 0 }</td>
                                             <td>{ klub.point ?? 0 }</td>
                                         </tr>
                                     ))

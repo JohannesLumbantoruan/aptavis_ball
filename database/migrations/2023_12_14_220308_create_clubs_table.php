@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('l')->nullable()->default(0);
             $table->integer('gf')->nullable()->default(0);
             $table->integer('ga')->nullable()->default(0);
+            $table->integer('point')->nullable()->default(0);
             $table->timestamps();
         });
     }

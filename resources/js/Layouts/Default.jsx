@@ -17,7 +17,7 @@ export default function Layout({ children }) {
                         <div className="collapse navbar-collapse" id="navbarCollapse">
                             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                                 <li className="nav-item">
-                                    <Link className="nav-link active" href="/">Klasemen</Link>
+                                    <Link className="nav-link" href="/">Klasemen</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" href="/clubs/create">Tambah Klub</Link>
