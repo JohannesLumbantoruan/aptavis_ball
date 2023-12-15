@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\ClubController::class, 'index']);
+Route::get('/clubs', [\App\Http\Controllers\ClubController::class, 'index']);
+Route::get('/clubs/create', [\App\Http\Controllers\ClubController::class, 'create']);
+Route::post('/clubs', [\App\Http\Controllers\ClubController::class, 'store']);
